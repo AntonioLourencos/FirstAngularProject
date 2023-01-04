@@ -1,10 +1,24 @@
-import { Component } from '@angular/core';
+import { ApiService } from './api.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: [],
 })
-export class AppComponent {
-  title = 'first_angular_project';
+export class AppComponent implements OnInit {
+  public countries!: {
+    name: string;
+    flag: string;
+    independent: boolean;
+    region: string;
+  }[];
+
+  ngOnInit(): void {
+    this.apiService.GetAllCountries().subscribe((data) => {
+      this.countries = data;
+    });
+  }
+
+  constructor(private apiService: ApiService) {}
 }
